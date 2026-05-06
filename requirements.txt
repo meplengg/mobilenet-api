@@ -6,3 +6,5 @@ onnxruntime
 pytest
 pydantic
 python-multipart
+torch
+timm
