@@ -3,7 +3,7 @@ import numpy as np
 
 class Model:
     def __init__(self):
-        self.session = ort.InferenceSession("models/mobilenetv3.onnx")
+        self.session = ort.InferenceSession("models/mobilenetv3_quant.onnx")
 
     def predict(self, x):
         input_name = self.session.get_inputs()[0].name
