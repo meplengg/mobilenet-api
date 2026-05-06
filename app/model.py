@@ -6,7 +6,7 @@ class Model:
     def __init__(self):
         self.model = timm.create_model(
             "mobilenetv3_large_100",
-            pretrained=True
+            pretrained=False
         )
         self.model.eval()
 
