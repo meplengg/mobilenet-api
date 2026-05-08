@@ -1,21 +1,26 @@
-import timm
-import torch
+import onnxruntime as ort
 import numpy as np
 
 class Model:
+
     def __init__(self):
-        self.model = timm.create_model(
-            "mobilenetv3_large_100",
-            pretrained=False
+
+        self.session = ort.InferenceSession(
+            "models/mobilenetv3_quant.onnx",
+            providers=["CPUExecutionProvider"]
         )
-        self.model.eval()
+
+        self.input_name = self.session.get_inputs()[0].name
 
     def predict(self, x):
-        x = torch.tensor(x)
 
-        with torch.no_grad():
-            outputs = self.model(x)
+        outputs = self.session.run(
+            None,
+            {
+                self.input_name: x.astype(np.float32)
+            }
+        )
 
-        pred = outputs.argmax(dim=1).item()
+        pred = np.argmax(outputs[0], axis=1)[0]
 
         return int(pred)
