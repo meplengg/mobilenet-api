@@ -17,6 +17,7 @@ MAX_SIZE = 5 * 1024 * 1024
 
 class PredictionResponse(BaseModel):
     class_id: int
+    label: str
 
 def run_model(x):
     return model.predict(x)
@@ -49,4 +50,4 @@ async def predict(file: UploadFile = File(...)):
         x
     )
 
-    return {"class_id": result}
+    return result
